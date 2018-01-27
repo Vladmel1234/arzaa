@@ -1,0 +1,17 @@
+{
+"presets": [
+    "es2015",
+    "stage-0",
+    "react"
+  ],
+  "plugins": [
+    ["babel-plugin-styled-components", {
+      "ssr": true, "displayName": true, "preprocess": false
+    }],
+    ["babel-plugin-root-import", {
+      "rootPathSuffix": "src"
+    }],
+    "babel-plugin-root-import",
+    "transform-decorators-legacy"
+  ]
+}
