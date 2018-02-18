@@ -57,6 +57,82 @@ class App extends Component {
 export default App;
 
 
+// COMPOUND COMPONENTS WITH CONTEXT
+
+// const TOGGLE_CONTEXT = '__toggle__';
+// function ToggleOn({ children }, context) {
+//   const { on } = context[TOGGLE_CONTEXT];
+//   return on ? children : null;
+// }
+// ToggleOn.contextTypes = {
+//   [TOGGLE_CONTEXT]: PropTypes.object.isRequired,
+// };
+// function ToggleOff({ children }, context) {
+//   const { on } = context[TOGGLE_CONTEXT];
+//   return on ? null : children;
+// }
+// ToggleOff.contextTypes = {
+//   [TOGGLE_CONTEXT]: PropTypes.object.isRequired,
+// };
+// function ToggleButton(props, context) {
+//   const { on, toggle } = context[TOGGLE_CONTEXT];
+//   return (
+//     <Switch on={on} onClick={toggle} {...props} />
+//   );
+// }
+// ToggleButton.contextTypes = {
+//   [TOGGLE_CONTEXT]: PropTypes.object.isRequired,
+// };
+// class Toggle extends React.Component {
+//   static On = ToggleOn
+//   static Off = ToggleOff
+//   static Button = ToggleButton
+//   static defaultProps = { onToggle: () => {} }
+//   static childContextTypes = {
+//     [TOGGLE_CONTEXT]: PropTypes.object.isRequired,
+//   }
+
+//   state = { on: false }
+
+//   getChildContext() {
+//     return {
+//       [TOGGLE_CONTEXT]: {
+//         on: this.state.on,
+//         toggle: this.toggle,
+//       },
+//     };
+//   }
+
+//   toggle = () =>
+//     this.setState(
+//       ({ on }) => ({ on: !on }),
+//       () => this.props.onToggle(this.state.on),
+//     )
+
+//   render() {
+//     return <div>{this.props.children}</div>;
+//   }
+// }
+
+
+// class App extends Component {
+//   render() {
+//     return (
+//       <Toggle
+//         onToggle={on => console.log('toggle', on)}
+//       >
+//         <Toggle.On>The button is on</Toggle.On>
+//         <div>
+//           <Toggle.Off>The button is off</Toggle.Off>
+//         </div>
+//         <Toggle.Button />
+//       </Toggle>
+//     );
+//   }
+// }
+
+// export default App;
+
 // EDITION WITH CONTEXT AND HOC
 
 // const TOGGLE_CONTEXT = '__toggle__';
@@ -164,6 +240,53 @@ export default App;
 //           />
 //         </Toggle>
 //       </div>
+//     );
+//   }
+// }
+
+// export default App;
+
+
+// RENDER PROPS
+
+// class Toggle extends React.Component {
+//   static defaultProps = { onToggle: () => {} }
+//   state = { on: false }
+//   toggle = () =>
+//     this.setState(
+//       ({ on }) => ({ on: !on }),
+//       () => this.props.onToggle(this.state.on),
+//     )
+//   render() {
+//     return this.props.render({
+//       on: this.state.on,
+//       toggle: this.toggle,
+//     });
+//   }
+// }
+
+// const MyToggle = ({ on, toggle }) => (
+//   <button onClick={toggle}>
+//     {on ? 'on' : 'off'}
+//   </button>
+// );
+
+// class App extends Component {
+//   render() {
+//     return (
+//       <Toggle
+//         onToggle={on => console.log('toggle', on)}
+//         render={({ on, toggle }) => (
+//           <div>
+//             {on
+//               ? 'The button is on'
+//               : 'The button is off'}
+//             <Switch on={on} onClick={toggle} />
+//             <hr />
+//             <MyToggle on={on} toggle={toggle} />
+//           </div>
+//         )}
+//       />
 //     );
 //   }
 // }
